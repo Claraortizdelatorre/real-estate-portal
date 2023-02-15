@@ -9,7 +9,16 @@ export const getProperty = id =>
 
 const contactUrl = `${process.env.BASE_API_URL}/contact`;
 
+//enviar info de contacto
 export const isValidContact = form => 
     Axios.post(contactUrl, form).then(response => {
+        return response.data;
+    });
+
+// Para equipamiento
+const equipmentsUrl = `${process.env.BASE_API_URL}/equipments`;
+
+export const getEquipment = () => 
+    Axios.get(equipmentsUrl).then(response => {
         return response.data;
     });

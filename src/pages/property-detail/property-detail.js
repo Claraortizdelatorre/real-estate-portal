@@ -1,9 +1,9 @@
 import { history } from '../../core/router';
 import { 
     getProperty, 
-    isValidContact 
+    isValidContact,
+    getEquipment
 } from './property-detail.api';
-import { getEquipment } from '../../common/api/common.api';
 import { setPropertyValues } from './property-detail.helpers';
 import { mapPropertyFromApiToVM } from './property-detail.mappers';
 import { formValidation } from './property-detail.validations';
@@ -16,6 +16,7 @@ import {
 
 const params = history.getParams();
 
+//lo paso a mappers
 Promise.all([
     getProperty(params.id),
     getEquipment(),

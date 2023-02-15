@@ -10,7 +10,7 @@ export const mapPropertyFromApiToVM = (property, equipmentsList) => {
         notes: property.notes,
         address: property.address,
         mainFeatures: property.mainFeatures,
-        equipments: getEquipments(property, equipmentsList),
+        equipments: transformEquipment(property, equipmentsList),
         locationUrl: property.locationUrl,
         images: Array.isArray(property.images) ? property.images : [],
     }
@@ -20,10 +20,12 @@ const getRoomWord = rooms => rooms > 1 ? 'habitaciones' : 'habitación';
 
 const getBathroomWord = bathrooms => bathrooms > 1 ? 'baños' : 'baño';
 
-const getEquipments = (property, equipmentsList) => {  
-    const equipments = property.equipmentsIds.map(obj => {   
+
+const transformEquipment = (property, equipmentsList) => {  
+    const equipments = property.equipmentIds.map(obj => {   
       return equipmentsList.find(element => element.id === obj).name; 
     });
 
     return equipments;
 };
+
