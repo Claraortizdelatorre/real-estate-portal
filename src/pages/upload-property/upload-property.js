@@ -1,3 +1,4 @@
+import { saveProperty, getProvinceList, getSaleTypeList, getEquipment } from './upload-property.api';
 import { 
     onUpdateField, 
     onSetError, 
@@ -16,26 +17,67 @@ import {
     addElement,
     removeElement, 
 } from './upload-property.helpers';
+import { mapPropertyFromVMToApi } from './upload-property.mappers';
 import { formValidation } from './upload-property.validations';
 
+
+
+Promise.all([
+    getSaleTypeList(),
+    getProvinceList(),
+    getEquipment(),
+]).then(resultList => {
+    const [saleTypeList, provinceList, equipmentList] = resultList;
+    //cargar
+    setCheckboxList(saleTypeList, 'saleTypes');
+    setEvents(saleTypeList, 'saleTypes');
+    setOptionList(provinceList, 'province');
+    setCheckboxList(equipmentList, 'equipments');
+    setEvents(equipmentList, 'equipments');
+});
+
+
+
+
 let property = {
-    id: '',
-    title: '',
-    notes: '',
-    email: '',
-    phone: '',
-    price: '',
-    saleTypeIds:[],
-    address: '',
-    city:'',
-    provinceId: '',
-    squareMeter: '',
-    rooms: '',
-    bathrooms: '',
-    locationUrl: '',
-    mainFeatures: [],
-    equipmentIds:[],
-    images:[],
+        id: '',
+        title: '',
+        notes: '',
+        email: '',
+        phone: '',
+        price: '',
+        saleTypes: [],
+        address: '',
+        city: '',
+        province: '',
+        squareMeter: '',
+        rooms: '',
+        bathrooms: '',
+        locationUrl: '',
+        mainFeatures: [],
+        equipments: [],
+        images: [],
+    };
+
+//Alquiler , compra etc..
+const setEvents = (list, id) => {
+    list.forEach(element => {
+        const checkBox = formatCheckboxId(element);
+
+        onUpdateField(checkBox, event => {
+            const value = event.target.value;
+
+           if (event.target.checked === true) {
+               property = addElement(value, property, id);
+           } else {
+            property = removeElement(value, property, id);
+           };
+
+           formValidation.validateField('saleTypes', property.saleTypes).then(result => {
+                onSetError('saleTypes', result);
+            });
+        });
+    });
 };
 
 onUpdateField('title', (event) => {
@@ -201,7 +243,7 @@ onSubmitForm('insert-feature-button', () => {
     const value = document.getElementById('newFeature').value; //obtengo el valor introducido
 
     if (value) {
-        newProperty = addElement(value, newProperty, 'mainFeatures');
+        property = addElement(value, property, 'mainFeatures');
 
         onAddFeature(value);
 
@@ -209,7 +251,7 @@ onSubmitForm('insert-feature-button', () => {
 
         onSubmitForm(buttonId, () => {
             onRemoveFeature(value);
-            newProperty = removeElement(value, newProperty, 'mainFeatures');
+            property = removeElement(value, property, 'mainFeatures');
         });
     };
 });
@@ -222,4 +264,25 @@ onAddFile('add-image', image => {
         ...property,
         images: [...property.images, image],
     };
+});
+
+// enviar información del formulario.
+
+onSubmitForm('save-button', () => {
+    formValidation.validateForm(property).then(result => {
+        onSetFormErrors(result);
+
+        const mappedProperty = mapPropertyFromVMToApi(property);
+
+        console.log(mappedProperty);
+
+        if (result.succeeded) {
+            saveProperty(mappedProperty).then(() => {
+                history.back();
+                alert('Vivienda insertada.');
+            });
+        } else {
+            alert('Ha ocurrido un error.');
+        }
+    });
 });
