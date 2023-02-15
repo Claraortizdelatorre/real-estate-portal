@@ -30,22 +30,7 @@ const loadProperty = (propertyList, equipmentList) => {
     setPropertyValues(vMProperties);
 }
 
-let property = {
-    id: '',
-    mainImage: '',
-    title: '',
-    city: '',
-    rooms: '',
-    squareMeter: '',
-    price: '',
-    bathrooms: '',
-    notes: '',
-    mainFeatures: '',
-    equipments: '',
-    locationUrl: '',
-    images: '',
-};
-
+//contacto
 let form = {
     email: '',
     message: '',

@@ -6788,21 +6788,8 @@ var loadProperty = function loadProperty(propertyList, equipmentList) {
   var vMProperties = (0, _propertyDetail3.mapPropertyFromApiToVM)(propertyList, equipmentList);
   (0, _propertyDetail2.setPropertyValues)(vMProperties);
 };
-var property = {
-  id: '',
-  mainImage: '',
-  title: '',
-  city: '',
-  rooms: '',
-  squareMeter: '',
-  price: '',
-  bathrooms: '',
-  notes: '',
-  mainFeatures: '',
-  equipments: '',
-  locationUrl: '',
-  images: ''
-};
+
+//contacto
 var form = {
   email: '',
   message: ''
