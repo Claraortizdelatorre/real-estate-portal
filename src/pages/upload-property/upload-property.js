@@ -14,8 +14,6 @@ import {
     onRemoveFeature, 
     setCheckboxList, 
     setOptionList,
-    addElement,
-    removeElement, 
 } from './upload-property.helpers';
 import { mapPropertyFromVMToApi } from './upload-property.mappers';
 import { formValidation } from './upload-property.validations';
@@ -59,7 +57,8 @@ let property = {
         images: [],
     };
 
-//Alquiler , compra etc..
+/*
+//Alquiler , compra etc.. checkbo
 const setEvents = (list, id) => {
     list.forEach(element => {
         const checkBox = formatCheckboxId(element);
@@ -70,7 +69,7 @@ const setEvents = (list, id) => {
            if (event.target.checked === true) {
                property = addElement(value, property, id);
            } else {
-            property = removeElement(value, property, id);
+                property = removeElement(value, property, id);
            };
 
            formValidation.validateField('saleTypes', property.saleTypes).then(result => {
@@ -79,7 +78,7 @@ const setEvents = (list, id) => {
         });
     });
 };
-
+*/
 onUpdateField('title', (event) => {
     const value = event.target.value;
 
@@ -244,15 +243,15 @@ onSubmitForm('insert-feature-button', () => {
     console.log(value);
 
     if (value) {
-        property = addElement(value, property, 'mainFeatures');
+       // property = addElement(value, property, 'mainFeatures');
 
-        onAddFeature(value);
+        onAddFeature(value); //añadir
 
         const buttonId = formatDeleteFeatureButtonId(value); //eliminar por id
 
         onSubmitForm(buttonId, () => {
             onRemoveFeature(value);
-            property = removeElement(value, property, 'mainFeatures');
+           // property = removeElement(value, property, 'mainFeatures');
         });
     };
 });

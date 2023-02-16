@@ -2023,7 +2023,19 @@ Object.keys(_element).forEach(function (key) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setOptionList = exports.setCheckboxList = exports.onRemoveFeature = exports.onAddImage = exports.onAddFeature = exports.formatDeleteFeatureButtonId = exports.formatCheckboxId = void 0;
+exports.setOptionList = exports.setCheckboxList = exports.removeElement = exports.onRemoveFeature = exports.onAddImage = exports.onAddFeature = exports.formatDeleteFeatureButtonId = exports.formatCheckboxId = exports.addElement = void 0;
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 var formatCheckboxId = function formatCheckboxId(item) {
   return "".concat(item.id, "-").concat(item.name);
 };
@@ -2106,6 +2118,16 @@ var onAddImage = function onAddImage(image) {
   imagesElement.insertBefore(imageContainerElement, addImageButton);
 };
 exports.onAddImage = onAddImage;
+var addElement = function addElement(value, obj, id) {
+  return _objectSpread(_objectSpread({}, obj), {}, _defineProperty({}, id, [].concat(_toConsumableArray(obj[id]), [value])));
+};
+exports.addElement = addElement;
+var removeElement = function removeElement(value, obj, id) {
+  return _objectSpread(_objectSpread({}, obj), {}, _defineProperty({}, id, obj[id].filter(function (element) {
+    return element !== value;
+  })));
+};
+exports.removeElement = removeElement;
 },{}],"pages/upload-property/upload-property.mappers.js":[function(require,module,exports) {
 "use strict";
 
@@ -5033,24 +5055,28 @@ var property = {
   images: []
 };
 
-//Alquiler , compra etc..
-var setEvents = function setEvents(list, id) {
-  list.forEach(function (element) {
-    var checkBox = (0, _uploadProperty2.formatCheckboxId)(element);
-    (0, _helpers.onUpdateField)(checkBox, function (event) {
-      var value = event.target.value;
-      if (event.target.checked === true) {
-        property = (0, _uploadProperty2.addElement)(value, property, id);
-      } else {
-        property = (0, _uploadProperty2.removeElement)(value, property, id);
-      }
-      ;
-      _uploadProperty4.formValidation.validateField('saleTypes', property.saleTypes).then(function (result) {
-        (0, _helpers.onSetError)('saleTypes', result);
-      });
+/*
+//Alquiler , compra etc.. checkbo
+const setEvents = (list, id) => {
+    list.forEach(element => {
+        const checkBox = formatCheckboxId(element);
+
+        onUpdateField(checkBox, event => {
+            const value = event.target.value;
+
+           if (event.target.checked === true) {
+               property = addElement(value, property, id);
+           } else {
+                property = removeElement(value, property, id);
+           };
+
+           formValidation.validateField('saleTypes', property.saleTypes).then(result => {
+                onSetError('saleTypes', result);
+            });
+        });
     });
-  });
 };
+*/
 (0, _helpers.onUpdateField)('title', function (event) {
   var value = event.target.value;
   property = _objectSpread(_objectSpread({}, property), {}, {
@@ -5167,15 +5193,18 @@ var setEvents = function setEvents(list, id) {
   var value = document.getElementById('newFeature').value; //obtengo el valor introducido
   console.log(value);
   if (value) {
-    property = (0, _uploadProperty2.addElement)(value, property, 'mainFeatures');
-    (0, _uploadProperty2.onAddFeature)(value);
+    // property = addElement(value, property, 'mainFeatures');
+
+    (0, _uploadProperty2.onAddFeature)(value); //añadir
+
     var buttonId = (0, _uploadProperty2.formatDeleteFeatureButtonId)(value); //eliminar por id
 
     (0, _helpers.onSubmitForm)(buttonId, function () {
       (0, _uploadProperty2.onRemoveFeature)(value);
-      property = (0, _uploadProperty2.removeElement)(value, property, 'mainFeatures');
+      // property = removeElement(value, property, 'mainFeatures');
     });
   }
+
   ;
 });
 
