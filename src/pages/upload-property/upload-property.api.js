@@ -15,11 +15,12 @@ export const getSaleTypeList = () =>
         return response.data;
     });
 
-// Para la lista de provincias
+// Para la lista de provincias, obtener 
 const provinceListUrl = `${process.env.BASE_API_URL}/provinces`;
 
 export const getProvinceList = () =>
     Axios.get(provinceListUrl).then(response => {
+        console.log(response.data);
         return response.data;
     });
 

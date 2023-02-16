@@ -21,14 +21,14 @@ import { mapPropertyFromVMToApi } from './upload-property.mappers';
 import { formValidation } from './upload-property.validations';
 
 
-
+//cargar
 Promise.all([
     getSaleTypeList(),
     getProvinceList(),
     getEquipment(),
 ]).then(resultList => {
     const [saleTypeList, provinceList, equipmentList] = resultList;
-    //cargar
+   
     setCheckboxList(saleTypeList, 'saleTypes');
     setEvents(saleTypeList, 'saleTypes');
     setOptionList(provinceList, 'province');
@@ -241,6 +241,7 @@ onUpdateField('locationUrl', (event) => {
 // Insertar caracteristicas basicas
 onSubmitForm('insert-feature-button', () => {
     const value = document.getElementById('newFeature').value; //obtengo el valor introducido
+    console.log(value);
 
     if (value) {
         property = addElement(value, property, 'mainFeatures');
@@ -269,6 +270,7 @@ onAddFile('add-image', image => {
 // enviar información del formulario.
 
 onSubmitForm('save-button', () => {
+    console.log("pulso boton guardar")
     formValidation.validateForm(property).then(result => {
         onSetFormErrors(result);
 
