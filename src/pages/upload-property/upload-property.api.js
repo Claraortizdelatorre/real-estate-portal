@@ -15,7 +15,7 @@ export const getSaleTypeList = () =>
         return response.data;
     });
 
-// Para la lista de provincias, obtener 
+// Para la lista de provincias, cargar 
 const provinceListUrl = `${process.env.BASE_API_URL}/provinces`;
 
 export const getProvinceList = () =>

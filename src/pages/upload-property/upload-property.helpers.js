@@ -94,6 +94,7 @@ export const onAddImage = image => {
   imagesElement.insertBefore(imageContainerElement, addImageButton);
 };
 
+
 export const addElement = (value, obj, id) => {
   return {
       ...obj,

@@ -1872,7 +1872,7 @@ var getSaleTypeList = function getSaleTypeList() {
   });
 };
 
-// Para la lista de provincias, obtener 
+// Para la lista de provincias, cargar 
 exports.getSaleTypeList = getSaleTypeList;
 var provinceListUrl = "".concat("http://localhost:3000/api", "/provinces");
 var getProvinceList = function getProvinceList() {
@@ -5055,28 +5055,24 @@ var property = {
   images: []
 };
 
-/*
 //Alquiler , compra etc.. checkbo
-const setEvents = (list, id) => {
-    list.forEach(element => {
-        const checkBox = formatCheckboxId(element);
-
-        onUpdateField(checkBox, event => {
-            const value = event.target.value;
-
-           if (event.target.checked === true) {
-               property = addElement(value, property, id);
-           } else {
-                property = removeElement(value, property, id);
-           };
-
-           formValidation.validateField('saleTypes', property.saleTypes).then(result => {
-                onSetError('saleTypes', result);
-            });
-        });
+var setEvents = function setEvents(list, id) {
+  list.forEach(function (element) {
+    var checkBox = (0, _uploadProperty2.formatCheckboxId)(element);
+    (0, _helpers.onUpdateField)(checkBox, function (event) {
+      var value = event.target.value;
+      if (event.target.checked === true) {
+        property = (0, _uploadProperty2.addElement)(value, property, id);
+      } else {
+        property = (0, _uploadProperty2.removeElement)(value, property, id);
+      }
+      ;
+      _uploadProperty4.formValidation.validateField('saleTypes', property.saleTypes).then(function (result) {
+        (0, _helpers.onSetError)('saleTypes', result);
+      });
     });
+  });
 };
-*/
 (0, _helpers.onUpdateField)('title', function (event) {
   var value = event.target.value;
   property = _objectSpread(_objectSpread({}, property), {}, {
@@ -5259,7 +5255,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50543" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59431" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

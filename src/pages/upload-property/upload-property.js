@@ -8,12 +8,14 @@ import {
 } from '../../common/helpers';
 import { 
     formatCheckboxId, 
+    addElement,
+    removeElement,
     formatDeleteFeatureButtonId, 
     onAddFeature, 
     onAddImage, 
     onRemoveFeature, 
     setCheckboxList, 
-    setOptionList,
+    setOptionList
 } from './upload-property.helpers';
 import { mapPropertyFromVMToApi } from './upload-property.mappers';
 import { formValidation } from './upload-property.validations';
@@ -57,7 +59,7 @@ let property = {
         images: [],
     };
 
-/*
+
 //Alquiler , compra etc.. checkbo
 const setEvents = (list, id) => {
     list.forEach(element => {
@@ -66,7 +68,7 @@ const setEvents = (list, id) => {
         onUpdateField(checkBox, event => {
             const value = event.target.value;
 
-           if (event.target.checked === true) {
+          if (event.target.checked === true) {
                property = addElement(value, property, id);
            } else {
                 property = removeElement(value, property, id);
@@ -78,7 +80,7 @@ const setEvents = (list, id) => {
         });
     });
 };
-*/
+
 onUpdateField('title', (event) => {
     const value = event.target.value;
 
