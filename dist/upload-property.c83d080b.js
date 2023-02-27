@@ -5055,7 +5055,7 @@ var property = {
   images: []
 };
 
-//Alquiler , compra etc.. checkbo
+//Alquiler , compra etc.. checkbock
 var setEvents = function setEvents(list, id) {
   list.forEach(function (element) {
     var checkBox = (0, _uploadProperty2.formatCheckboxId)(element);
@@ -5189,18 +5189,14 @@ var setEvents = function setEvents(list, id) {
   var value = document.getElementById('newFeature').value; //obtengo el valor introducido
   console.log(value);
   if (value) {
-    // property = addElement(value, property, 'mainFeatures');
-
     (0, _uploadProperty2.onAddFeature)(value); //añadir
 
     var buttonId = (0, _uploadProperty2.formatDeleteFeatureButtonId)(value); //eliminar por id
 
     (0, _helpers.onSubmitForm)(buttonId, function () {
       (0, _uploadProperty2.onRemoveFeature)(value);
-      // property = removeElement(value, property, 'mainFeatures');
     });
   }
-
   ;
 });
 
@@ -5222,8 +5218,8 @@ var setEvents = function setEvents(list, id) {
     console.log(mappedProperty);
     if (result.succeeded) {
       (0, _uploadProperty.saveProperty)(mappedProperty).then(function () {
-        history.back();
         alert('Vivienda insertada.');
+        history.back();
       });
     } else {
       alert('Ha ocurrido un error.');

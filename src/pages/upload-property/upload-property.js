@@ -60,7 +60,7 @@ let property = {
     };
 
 
-//Alquiler , compra etc.. checkbo
+//Alquiler , compra etc.. checkbock
 const setEvents = (list, id) => {
     list.forEach(element => {
         const checkBox = formatCheckboxId(element);
@@ -245,7 +245,6 @@ onSubmitForm('insert-feature-button', () => {
     console.log(value);
 
     if (value) {
-       // property = addElement(value, property, 'mainFeatures');
 
         onAddFeature(value); //añadir
 
@@ -253,7 +252,6 @@ onSubmitForm('insert-feature-button', () => {
 
         onSubmitForm(buttonId, () => {
             onRemoveFeature(value);
-           // property = removeElement(value, property, 'mainFeatures');
         });
     };
 });
@@ -281,8 +279,9 @@ onSubmitForm('save-button', () => {
 
         if (result.succeeded) {
             saveProperty(mappedProperty).then(() => {
-                history.back();
                 alert('Vivienda insertada.');
+                history.back();
+                
             });
         } else {
             alert('Ha ocurrido un error.');
