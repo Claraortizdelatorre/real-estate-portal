@@ -7,7 +7,7 @@ export const mapPropertyFromVMToApi = property => {
         rooms: parseInt(property.rooms),
         bathrooms: parseInt(property.bathrooms),
         mainFeatures: Array.isArray(property.mainFeatures) ? property.mainFeatures : '',
-        equipmentsIds: Array.isArray(property.equipments) ? property.equipments : '',
+        equipmentIds: Array.isArray(property.equipments) ? property.equipments : '',
         images: Array.isArray(property.images) ? property.images : '',
     };
 };
